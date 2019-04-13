@@ -45,6 +45,7 @@
 
 
         <EditText
+            android:id="@+id/nombre_persona"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Nombre del nuevo usuario"
@@ -55,6 +56,7 @@
 
 
         <ListView
+            android:id="@+id/lista_grupo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>
