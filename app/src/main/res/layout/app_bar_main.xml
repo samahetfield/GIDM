@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/white"
-            fab:fab_icon="@drawable/ic_nuevopago"
+            fab:fab_icon="@drawable/ic_nuevopago_dark"
             fab:fab_title="@string/nuevo_pago" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

@@ -9,7 +9,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Operaciones {
     @PrimaryKey
-    public int oid;
+    public Integer oid;
 
     @ColumnInfo(name = "Título operación")
     public String titulo_operacion;

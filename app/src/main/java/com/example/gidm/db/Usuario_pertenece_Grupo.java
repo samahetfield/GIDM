@@ -9,20 +9,43 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(foreignKeys = {@ForeignKey(entity = Usuarios.class,
                                     parentColumns = "uid",
-                                    childColumns = "user_id"),
+                                    childColumns = "ID usuario"),
                         @ForeignKey(entity = Grupos.class,
                                     parentColumns = "gid",
-                                    childColumns = "group_id")
+                                    childColumns = "ID grupo")
 })
 
 public class Usuario_pertenece_Grupo {
-    @PrimaryKey
-    public int pid;
+    @PrimaryKey(autoGenerate = true)
+    public Integer pid;
 
     @ColumnInfo(name = "ID grupo")
-    public int group_id;
+    public Integer group_id;
 
     @ColumnInfo(name = "ID usuario")
-    public int user_id;
+    public Integer user_id;
 
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public Integer getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(Integer group_id) {
+        this.group_id = group_id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
 }

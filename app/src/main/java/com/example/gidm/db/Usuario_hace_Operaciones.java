@@ -10,25 +10,25 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(foreignKeys = {
         @ForeignKey(entity = Operaciones.class,
                     parentColumns = "oid",
-                    childColumns = "oper_id"),
+                    childColumns = "ID Operación"),
         @ForeignKey(entity = Usuarios.class,
                     parentColumns = "uid",
-                    childColumns = "user_id"),
+                    childColumns = "ID usuario"),
         @ForeignKey(entity = Usuarios.class,
                     parentColumns = "uid",
-                    childColumns = "user_receive")
+                    childColumns = "Dirigida a")
 })
 public class Usuario_hace_Operaciones {
     @PrimaryKey
-    public int uoid;
+    public Integer uoid;
 
     @ColumnInfo(name = "ID Operación")
-    public int oper_id;
+    public Integer oper_id;
 
     @ColumnInfo(name = "ID usuario")
-    public int user_id;
+    public Integer user_id;
 
-    @ColumnInfo(name = "Dirigida a ")
-    public int user_receive;
+    @ColumnInfo(name = "Dirigida a")
+    public Integer user_receive;
 
 }

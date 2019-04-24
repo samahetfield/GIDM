@@ -22,13 +22,21 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.gidm.db.AppDatabase;
+import com.example.gidm.db.Grupos;
+
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MainActivity.SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
+    private AppDatabase mDb;
+    private VistaGrupo vistaGrupo = null;
+    private Gastos gastos = null;
+    Integer id_grupo = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,28 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        vistaGrupo = new VistaGrupo();
+        gastos = new Gastos();
 
+        mDb = AppDatabase.getDatabase(getApplicationContext());
+
+        if(getIntent().getExtras() != null){
+            if(getIntent().getExtras().containsKey("ID_grupo")){
+                id_grupo = Integer.parseInt(getIntent().getStringExtra("ID_grupo"));
+            }
+        }
+
+        NavigationView navView = findViewById(R.id.nav_view);
+        if(id_grupo != 0){
+            View headerView = navView.getHeaderView(0);
+            TextView nombre_grupo_cabecera = headerView.findViewById(R.id.nombre_grupo_cabecera);
+
+            Grupos grupo = mDb.gruposDao().getGrupo(id_grupo);
+            nombre_grupo_cabecera.setText(grupo.getGroupName());
+
+            vistaGrupo = new VistaGrupo(id_grupo);
+            gastos = new Gastos(id_grupo);
+        }
         mSectionsPagerAdapter = new MainActivity.SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -47,12 +76,11 @@ public class MainActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new VistaGrupo(), "Vista Grupo");
-        adapter.addFragment(new Gastos(), "Gastos");
+        adapter.addFragment(vistaGrupo, "Vista Grupo");
+        adapter.addFragment(gastos, "Gastos");
 
         mViewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,9 +91,21 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu m = navigationView.getMenu();
         SubMenu topChannelMenu = m.addSubMenu("Mis grupos");
-        topChannelMenu.add("Foo");
-        topChannelMenu.add("Bar");
-        topChannelMenu.add("Baz");
+
+        final List<Grupos> grupos = mDb.gruposDao().getAll();
+        for(int i=0; i<grupos.size(); i++){
+            topChannelMenu.add(grupos.get(i).getGroupName());
+            final int finalI = i;
+            topChannelMenu.getItem(i).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("ID_grupo", String.valueOf(grupos.get(finalI).gid));
+                    startActivity(intent);
+                    return true;
+                }
+            });
+        }
 
         MenuItem mi = m.getItem(m.size()-1);
         mi.setTitle(mi.getTitle());
@@ -192,7 +232,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
     }
 

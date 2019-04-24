@@ -10,8 +10,14 @@ import android.view.ViewGroup;
 
 public class Gastos extends Fragment {
     View view;
-    public Gastos(){
+    Integer id_grupo;
 
+    public Gastos(){
+        id_grupo = 0;
+    }
+
+    public Gastos(Integer idGrupo){
+        id_grupo = idGrupo;
     }
 
     @Nullable

@@ -13,19 +13,30 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.gidm.db.AppDatabase;
+import com.example.gidm.db.DatabaseClient;
+import com.example.gidm.db.Grupos;
+import com.example.gidm.db.Usuario_pertenece_Grupo;
+import com.example.gidm.db.Usuarios;
+
 public class CrearGrupo extends AppCompatActivity {
     ListView lista_grupo;
     ArrayAdapter<String> adapter;
     EditText nombre_edit;
+    EditText nombre_grupo;
+    private AppDatabase mDb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_grupo);
+        mDb = AppDatabase.getDatabase(getApplicationContext());
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        nombre_grupo = findViewById(R.id.group_name);
         nombre_edit = findViewById(R.id.nombre_persona);
 
         nombre_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -69,7 +80,34 @@ public class CrearGrupo extends AppCompatActivity {
                 return true;
 
             case R.id.action_crear:
+
+                String nombre_de_grupo = nombre_grupo.getText().toString();
+
+                Grupos grupo = new Grupos(nombre_de_grupo);
+
+                long grupoId = mDb.gruposDao().insert(grupo);
+                grupo.setGid((int) grupoId);
+
+                for(int i=0; i<adapter.getCount(); i++){
+                    String nombre_user = adapter.getItem(i);
+
+                    Usuarios usuario = new Usuarios(nombre_user);
+
+                    long usuarioid = mDb.usuariosDao().insert(usuario);
+                    usuario.setUid((int) usuarioid);
+
+                    Usuario_pertenece_Grupo usuario_pertenece_grupo = new Usuario_pertenece_Grupo();
+                    usuario_pertenece_grupo.setUser_id(usuario.getUid());
+                    usuario_pertenece_grupo.setGroup_id(grupo.getGid());
+
+                    long user_grupo = mDb.usuarios_pertenece_grupo_dao().insert(usuario_pertenece_grupo);
+                    usuario_pertenece_grupo.setPid((int) user_grupo);
+
+                }
+
+
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("ID_Grupo", grupoId);
                 startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

@@ -13,6 +13,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
+        android:id="@+id/nombre_grupo_cabecera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="24sp"
