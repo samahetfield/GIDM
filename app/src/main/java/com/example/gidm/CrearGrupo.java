@@ -102,7 +102,6 @@ public class CrearGrupo extends AppCompatActivity {
 
                     long user_grupo = mDb.usuarios_pertenece_grupo_dao().insert(usuario_pertenece_grupo);
                     usuario_pertenece_grupo.setPid((int) user_grupo);
-
                 }
 
 

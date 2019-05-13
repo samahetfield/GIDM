@@ -6,11 +6,11 @@
     <item android:title="Opciones">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_new"
                 android:icon="@drawable/ic_add_circle_outline_black_24dp"
                 android:title="@string/add_group" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_delete"
                 android:icon="@drawable/ic_remove_circle_outline_black_24dp"
                 android:title="@string/remove_group" />
         </menu>

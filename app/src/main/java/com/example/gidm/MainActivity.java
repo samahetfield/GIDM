@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.example.gidm.db.AppDatabase;
 import com.example.gidm.db.Grupos;
+import com.example.gidm.db.Usuario_pertenece_Grupo;
+import com.example.gidm.db.Usuarios;
 
 import java.util.List;
 
@@ -152,16 +154,41 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-        if (id == R.id.nav_share) {
+        if (id == R.id.nav_new) {
             Intent intent = new Intent(getApplicationContext(), CrearGrupo.class);
             startActivity(intent);
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_delete) {
+            if(id_grupo != 0){
+                eliminarGrupo();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                id_grupo = 0;
+                startActivity(intent);
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void eliminarGrupo() {
+        List<Usuarios> upg = mDb.usuarios_pertenece_grupo_dao().getUsuariosGrupos(id_grupo);
+        List<Usuario_pertenece_Grupo> user_group = mDb.usuarios_pertenece_grupo_dao().getUPG(id_grupo);
+
+
+        for(int i=0; i<user_group.size(); i++){
+            mDb.usuarios_pertenece_grupo_dao().delete(user_group.get(i));
+        }
+
+        for (int i=0; i<upg.size(); i++){
+            mDb.usuariosDao().delete(upg.get(i));
+        }
+
+
+        Grupos grupo = mDb.gruposDao().getGrupo(id_grupo);
+
+        mDb.gruposDao().delete(grupo);
+
     }
 
 

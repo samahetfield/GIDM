@@ -13,6 +13,9 @@ public interface Usuarios_pertenece_Grupo_Dao {
     @Query("SELECT * FROM Usuario_pertenece_Grupo")
     List<Usuario_pertenece_Grupo> getAll();
 
+    @Query("SELECT * FROM Usuario_pertenece_Grupo upg WHERE upg.`ID grupo` = :id_grupo")
+    List<Usuario_pertenece_Grupo> getUPG(Integer id_grupo);
+
     @Query("SELECT * FROM Usuario_pertenece_Grupo upg, Usuarios u WHERE upg.'ID grupo' = :id_grupo AND u.uid= upg.`ID usuario`")
     List<Usuarios> getUsuariosGrupos(Integer id_grupo);
 

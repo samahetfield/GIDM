@@ -17,5 +17,4 @@ public interface UsuariosDao {
 
     @Delete
     void delete(Usuarios usuarios);
-
 }

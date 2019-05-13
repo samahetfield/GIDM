@@ -20,5 +20,4 @@ public interface GruposDao {
 
     @Delete
     void delete(Grupos grupo);
-
 }
