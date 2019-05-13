@@ -21,11 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gidm.db.AppDatabase;
 import com.example.gidm.db.Grupos;
 import com.example.gidm.db.Usuario_pertenece_Grupo;
 import com.example.gidm.db.Usuarios;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         mDb = AppDatabase.getDatabase(getApplicationContext());
 
+
+        // Buscamos si hay algún grupo seleccionado
         if(getIntent().getExtras() != null){
             if(getIntent().getExtras().containsKey("ID_grupo")){
                 id_grupo = Integer.parseInt(getIntent().getStringExtra("ID_grupo"));
@@ -59,6 +63,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        //Si hay algún grupo seleccionado mostramos sus usuarios por pantalla y el nombre en el Navigation Drawer
+
         if(id_grupo != 0){
             View headerView = navView.getHeaderView(0);
             TextView nombre_grupo_cabecera = headerView.findViewById(R.id.nombre_grupo_cabecera);
@@ -94,6 +101,13 @@ public class MainActivity extends AppCompatActivity
         Menu m = navigationView.getMenu();
         SubMenu topChannelMenu = m.addSubMenu("Mis grupos");
 
+        /*
+
+            Obtenemos los grupos existentes en la base de datos para ponerlos en el Navigation Drawer
+
+            Además en la cabecera ponemos como título el nombre del grupo que tenemos seleccionado
+         */
+
         final List<Grupos> grupos = mDb.gruposDao().getAll();
         for(int i=0; i<grupos.size(); i++){
             topChannelMenu.add(grupos.get(i).getGroupName());
@@ -111,6 +125,43 @@ public class MainActivity extends AppCompatActivity
 
         MenuItem mi = m.getItem(m.size()-1);
         mi.setTitle(mi.getTitle());
+
+
+
+        /*
+            En las siguientes líneas indicamos el comportamiento de los botones del Menú Flotante
+
+         */
+
+        FloatingActionButton fab_gasto = findViewById(R.id.accion_gasto);
+        fab_gasto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(id_grupo == 0){
+                    Toast.makeText(MainActivity.this, "Debes seleccionar un grupo para el gasto", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(getApplicationContext(), NuevoGasto.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
+        com.getbase.floatingactionbutton.FloatingActionButton fab_pago = findViewById(R.id.accion_pago);
+        fab_pago.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(id_grupo == 0){
+                    Toast.makeText(MainActivity.this, "Debes seleccionar un grupo para el pago", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(getApplicationContext(), NuevoPago.class);
+                    startActivity(intent);
+                }
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(this);
     }

@@ -35,7 +35,7 @@
         android:layout_margin="24dp">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_favorito"
+            android:id="@+id/accion_gasto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/white"
@@ -43,7 +43,7 @@
             fab:fab_title="@string/nuevo_gasto" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/accion_buscar"
+            android:id="@+id/accion_pago"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/white"
