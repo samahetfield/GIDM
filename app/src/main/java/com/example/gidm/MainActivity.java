@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 else{
                     Intent intent = new Intent(getApplicationContext(), NuevoGasto.class);
+                    intent.putExtra("ID_Grupo", id_grupo);
                     startActivity(intent);
                 }
             }
@@ -157,9 +158,9 @@ public class MainActivity extends AppCompatActivity
                 }
                 else{
                     Intent intent = new Intent(getApplicationContext(), NuevoPago.class);
+                    intent.putExtra("ID_Grupo", id_grupo);
                     startActivity(intent);
                 }
-
             }
         });
 

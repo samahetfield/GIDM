@@ -19,6 +19,9 @@ public interface Usuarios_pertenece_Grupo_Dao {
     @Query("SELECT * FROM Usuario_pertenece_Grupo upg, Usuarios u WHERE upg.'ID grupo' = :id_grupo AND u.uid= upg.`ID usuario`")
     List<Usuarios> getUsuariosGrupos(Integer id_grupo);
 
+    @Query("SELECT u.`Nombre usuario` FROM Usuario_pertenece_Grupo upg, Usuarios u WHERE upg.'ID grupo' = :id_grupo AND u.uid= upg.`ID usuario`")
+    List<String> getNombresUsuariosGrupos(Integer id_grupo);
+
     @Insert
     long insert(Usuario_pertenece_Grupo usuario_pertenece_grupo);
 
