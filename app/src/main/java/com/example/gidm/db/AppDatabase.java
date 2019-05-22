@@ -13,6 +13,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract GruposDao gruposDao();
     public abstract UsuariosDao usuariosDao();
     public abstract Usuarios_pertenece_Grupo_Dao usuarios_pertenece_grupo_dao();
+    public abstract OperacionesDao operacionesDao();
+    public abstract Usuario_hace_operaciones_Dao usuario_hace_operaciones_dao();
 
 
     public static AppDatabase getDatabase(Context context){

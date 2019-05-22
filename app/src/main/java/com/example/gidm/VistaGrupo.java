@@ -41,6 +41,7 @@ public class VistaGrupo extends Fragment {
 
         List<Usuarios> usuarios_grupo = mDb.usuarios_pertenece_grupo_dao().getUsuariosGrupos(id_grupo);
 
+
         TableLayout table = view.findViewById(R.id.tabla_usuarios);
         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 5f);
         layoutParams.setMargins(0,10,0,10);
@@ -48,6 +49,9 @@ public class VistaGrupo extends Fragment {
             Log.d("Usuario", usuarios_grupo.get(i).getUsername());
             TableRow row = new TableRow(view.getContext());
 
+            Usuarios usuario1 = usuarios_grupo.get(i);
+
+            Double cantidad = mDb.usuario_hace_operaciones_dao().getCantidad(usuario1.getUid());
 
             TextView nombre_usuario = new TextView(view.getContext());
             nombre_usuario.setTextSize(18);
@@ -56,7 +60,7 @@ public class VistaGrupo extends Fragment {
             nombre_usuario.setText(usuarios_grupo.get(i).getUsername());
 
             TextView balance = new TextView(view.getContext());
-            balance.setText("0");
+            balance.setText(String.valueOf(cantidad));
             balance.setLayoutParams(layoutParams);
             balance.setTextSize(18);
 
