@@ -110,7 +110,8 @@ public class NuevoGasto extends AppCompatActivity {
                 operacion.setTitulo_operacion(concepto_gasto);
                 operacion.setCantidad(cantidad);
 
-                mDb.operacionesDao().insert(operacion);
+                long operacionid = mDb.operacionesDao().insert(operacion);
+                operacion.setOid((int) operacionid);
 
 
                 for(int i=0; i<usuarios_seleccionados.size(); i++){
@@ -119,7 +120,8 @@ public class NuevoGasto extends AppCompatActivity {
                     uho.setUser_id(mDb.usuariosDao().getID(usuario1));
                     uho.setUser_receive(mDb.usuariosDao().getID(usuarios_seleccionados.get(i)));
                     uho.setCantidad(cantidad_por_usuario);
-                    mDb.usuario_hace_operaciones_dao().insert(uho);
+                    long uoid = mDb.usuario_hace_operaciones_dao().insert(uho);
+                    uho.setUoid((int) uoid);
                 }
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);

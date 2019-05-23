@@ -15,6 +15,10 @@ public interface UsuariosDao {
     @Query("SELECT u.uid FROM usuarios u WHERE :nombre = u.`Nombre usuario`")
     Integer getID(String nombre);
 
+    @Query("SELECT u.`Nombre usuario` FROM usuarios u WHERE :id = u.uid")
+    String getUsername(Integer id);
+
+
     @Insert
     long insert(Usuarios usuarios);
 

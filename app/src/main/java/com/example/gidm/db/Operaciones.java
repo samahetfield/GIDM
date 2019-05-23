@@ -14,8 +14,8 @@ public class Operaciones {
     @ColumnInfo(name = "Título operación")
     public String titulo_operacion;
 
-    @ColumnInfo(name = "Cantidad")
-    public Double cantidad;
+    @ColumnInfo(name = "Cantidad Operacion")
+    public Double cantidad_oper;
 
 
     public Integer getOid() {
@@ -35,10 +35,10 @@ public class Operaciones {
     }
 
     public Double getCantidad() {
-        return cantidad;
+        return cantidad_oper;
     }
 
     public void setCantidad(Double cantidad) {
-        this.cantidad = cantidad;
+        this.cantidad_oper = cantidad;
     }
 }
