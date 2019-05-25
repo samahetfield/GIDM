@@ -22,6 +22,9 @@ public interface Usuario_hace_operaciones_Dao {
     @Query("SELECT * FROM Usuario_hace_Operaciones uo, Usuario_pertenece_Grupo ug WHERE ug.`ID grupo` = :id_grupo AND uo.`ID usuario` = ug.`ID usuario`")
     List<Usuario_hace_Operaciones> getoperacionesGrupo(Integer id_grupo);
 
+    @Query("SELECT * FROM Usuario_hace_Operaciones WHERE `ID usuario` = :user")
+    Usuario_hace_Operaciones getOperacionUsuario(Integer user);
+
 
     @Insert
     long insert(Usuario_hace_Operaciones usuario_hace_operaciones);

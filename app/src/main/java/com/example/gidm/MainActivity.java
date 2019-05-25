@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.gidm.db.AppDatabase;
 import com.example.gidm.db.Grupos;
+import com.example.gidm.db.Usuario_hace_Operaciones;
 import com.example.gidm.db.Usuario_pertenece_Grupo;
 import com.example.gidm.db.Usuarios;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -226,10 +227,15 @@ public class MainActivity extends AppCompatActivity
     private void eliminarGrupo() {
         List<Usuarios> upg = mDb.usuarios_pertenece_grupo_dao().getUsuariosGrupos(id_grupo);
         List<Usuario_pertenece_Grupo> user_group = mDb.usuarios_pertenece_grupo_dao().getUPG(id_grupo);
+        List<Usuario_hace_Operaciones> user_oper = mDb.usuario_hace_operaciones_dao().getoperacionesGrupo(id_grupo);
 
 
         for(int i=0; i<user_group.size(); i++){
             mDb.usuarios_pertenece_grupo_dao().delete(user_group.get(i));
+        }
+
+        for (int i=0; i<user_oper.size(); i++){
+            mDb.usuario_hace_operaciones_dao().delete(user_oper.get(i));
         }
 
         for (int i=0; i<upg.size(); i++){

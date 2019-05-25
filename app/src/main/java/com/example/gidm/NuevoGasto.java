@@ -115,13 +115,16 @@ public class NuevoGasto extends AppCompatActivity {
 
 
                 for(int i=0; i<usuarios_seleccionados.size(); i++){
-                    Usuario_hace_Operaciones uho = new Usuario_hace_Operaciones();
-                    uho.setOper_id(operacion.getOid());
-                    uho.setUser_id(mDb.usuariosDao().getID(usuario1));
-                    uho.setUser_receive(mDb.usuariosDao().getID(usuarios_seleccionados.get(i)));
-                    uho.setCantidad(cantidad_por_usuario);
-                    long uoid = mDb.usuario_hace_operaciones_dao().insert(uho);
-                    uho.setUoid((int) uoid);
+                    if(!usuario1.equals(usuarios_seleccionados.get(i))){
+                        Usuario_hace_Operaciones uho = new Usuario_hace_Operaciones();
+                        uho.setOper_id(operacion.getOid());
+                        uho.setUser_id(mDb.usuariosDao().getID(usuario1));
+                        uho.setUser_receive(mDb.usuariosDao().getID(usuarios_seleccionados.get(i)));
+                        uho.setCantidad(-cantidad_por_usuario);
+
+                        long uoid = mDb.usuario_hace_operaciones_dao().insert(uho);
+                        uho.setUoid((int) uoid);
+                    }
                 }
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
